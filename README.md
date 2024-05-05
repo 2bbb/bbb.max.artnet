@@ -2,6 +2,8 @@
 
 bbb.max.artnet is a library to use artnet based on node.script
 
+inspired by imp.dmx and pixsper/lxmax
+
 this release is alpha version not stable.
 
 ## dependencies
