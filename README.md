@@ -6,6 +6,22 @@ inspired by imp.dmx and pixsper/lxmax
 
 this release is alpha version not stable.
 
+## setup
+
+```bash
+cd /path/to/USER/Max/Library
+git clone 
+```
+
+after cloned
+
+```bash
+cd bbb.artnet.controller
+npm i
+```
+
+or use install command of `bbb.artnet.controller`
+
 ## dependencies
 
 * dmxnet
