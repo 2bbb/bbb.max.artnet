@@ -119,9 +119,12 @@ prepend `/` to above commands
 ### attributes
 
 * `@ip`
-    * IP of destination of artnet node 
+    * IP of interface to listen
     * string
-    * default: '127.0.0.1'
+    * default: '0.0.0.0'
+* `@port`
+    * integer
+    * default: 6454
 * `@universe`
     * integer
     * default: 0
