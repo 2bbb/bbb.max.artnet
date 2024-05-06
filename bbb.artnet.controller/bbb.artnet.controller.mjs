@@ -60,6 +60,19 @@ const osc_client = (() => {
     return null;
 })();
 
+const outlet = (() => {
+    if(osc_client) {
+        return (key, ... args) => {
+            Max.outlet(key, ... args);
+            osc_client.send(`/${key}`, ... args);
+        }
+    } else {
+        return (key, ... args) => {
+            Max.outlet(key, ... args);
+        }
+    }
+})();
+
 function validate(v) {
     return 0 ^ Math.max(0.0, Math.min(255.0, v));
 }
@@ -105,7 +118,7 @@ function blackout(enable) {
 function get_value(channel) {
     const values = blackout_values ? blackout_values : sender.values;
     if(0 <= channel - address_origin && channel - address_origin < 512) {
-        Max.outlet('value', channel, values[channel - address_origin]);
+        outlet('value', channel, values[channel - address_origin]);
     } else {
         Max.post(`invalid channel ${channel}`);
     }
@@ -114,9 +127,9 @@ function get_value(channel) {
 function get_values(length) {
     const values = blackout_values ? blackout_values : sender.values;
     if(length && length < 512) {
-        Max.outlet('values', ... sender.values.slice(0, 0 ^ length));
+        outlet('values', ... sender.values.slice(0, 0 ^ length));
     } else {
-        Max.outlet('values', ... sender.values);
+        outlet('values', ... sender.values);
     }
 }
 
@@ -152,8 +165,8 @@ const osc_server = (() => {
         server.on('/get_value', (channel) => {
             get_value(channel);
         });
-        server.on('/get_values', () => {
-            get_values();
+        server.on('/get_values', (length) => {
+            get_values(length);
         });
 
         Max.post(`osc server create with 0.0.0.0:${settings.osc_in}`);
