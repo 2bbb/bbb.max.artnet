@@ -44,6 +44,11 @@ artnet controller
     * set VALUE to range from MIN to MAX
 * blackout [ENABLE]
     * ENABLE: optional value if given then enable with truthy value and disable with falsy value, if not given then enable.
+* get_value CHANNEL
+    * get value of specified CHANNEL as `value CHANNEL 0`
+* get_values [LENGTH]
+    * LENGTH: length of values want to get, if not given then all values will be output
+    * get current values from 1st outlet as `values 0 ... 0`
 * **bang**
     * send packet manually
 * install
@@ -81,6 +86,9 @@ prepend `/` to above commands
     * enable osc feedback interface with given port. if not given then osc feedback interface will be disabled
     * integer
     * default: undefined
+* `@address_origin`
+    * integer
+    * default: 0
 * `@dict`
     * name for dict object describe parameters with attribute keys above without `@`
     * if this attribute is given then, other attributes above will be ignored

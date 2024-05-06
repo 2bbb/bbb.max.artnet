@@ -3,7 +3,6 @@ const dmxlib = new dmxnet();
 import * as Max from 'max-api';
 import * as osc from '@2bit/osc';
 
-import * as fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -23,6 +22,7 @@ const default_settings = {
     subnet: 0,
     net: 0,
     fps: 44,
+    address_origin: 0,
 };
 
 const settings = await (async () => {
@@ -36,6 +36,8 @@ const settings = await (async () => {
     }
     return settings;
 })();
+
+const { address_origin } = settings;
 
 console.log(settings);
 
@@ -64,12 +66,12 @@ function validate(v) {
 
 function setchannel(ch, value) {
     const values = blackout_values ? blackout_values : sender.values;
-    values[ch] = validate(value);
+    values[ch - address_origin] = validate(value);
 }
 
 function channel(ch, value) {
     const values = blackout_values ? blackout_values : sender.values;
-    values[ch] = validate(value);
+    values[ch - address_origin] = validate(value);
     sender.transmit();
 }
 
@@ -84,7 +86,7 @@ function set(... vs) {
 function fill(min, max, value) {
     const validated_value = validate(value);
     const values = blackout_values ? blackout_values : sender.values;
-    for(let i = min; i <= max; ++i) {
+    for(let i = min - address_origin; i <= max - address_origin; ++i) {
         values[i] = validated_value;
     }
 }
@@ -100,13 +102,33 @@ function blackout(enable) {
     sender.transmit();
 }
 
+function get_value(channel) {
+    const values = blackout_values ? blackout_values : sender.values;
+    if(0 <= channel - address_origin && channel - address_origin < 512) {
+        Max.outlet('value', channel, values[channel - address_origin]);
+    } else {
+        Max.post(`invalid channel ${channel}`);
+    }
+}
+
+function get_values(length) {
+    const values = blackout_values ? blackout_values : sender.values;
+    if(length && length < 512) {
+        Max.outlet('values', ... sender.values.slice(0, 0 ^ length));
+    } else {
+        Max.outlet('values', ... sender.values);
+    }
+}
+
 Max.addHandler(Max.MESSAGE_TYPES.BANG, () => sender.transmit());
 
-Max.addHandler("setchannel", (ch, v) => setchannel(ch, v));
-Max.addHandler("channel", (ch, v) => channel(ch, v));
-Max.addHandler("set", (... args) => set(... args));
-Max.addHandler("fill", (min, max, value) => fill(min, max, value));
-Max.addHandler("blackout", (enabled) => blackout(enabled));
+Max.addHandler("setchannel", setchannel);
+Max.addHandler("channel", channel);
+Max.addHandler("set", set);
+Max.addHandler("fill", fill);
+Max.addHandler("blackout", blackout);
+Max.addHandler("get_value", get_value);
+Max.addHandler("get_values", get_values);
 
 const osc_server = (() => {
     if(settings.osc_in != null) {
@@ -126,6 +148,12 @@ const osc_server = (() => {
         });
         server.on('/blackout', enable => {
             blackout(enable);
+        });
+        server.on('/get_value', (channel) => {
+            get_value(channel);
+        });
+        server.on('/get_values', () => {
+            get_values();
         });
 
         Max.post(`osc server create with 0.0.0.0:${settings.osc_in}`);
