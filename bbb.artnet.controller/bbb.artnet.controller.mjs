@@ -22,6 +22,7 @@ let blackout_values = null;
 
 const default_settings = {
     ip: '127.0.0.1',
+    port: 6454,
     universe: 0,
     subnet: 0,
     net: 0,
@@ -49,6 +50,7 @@ const sender = dmxlib.newSender({
     log: { level: 'error' },
     base_refresh_interval: 1000.0 / settings.fps,
     ip: settings.ip == 'localhost' ? '127.0.0.1' : settings.ip,
+    port: settings.port,
     universe: settings.universe,
     subnet: settings.subnet,
     net: settings.net,
