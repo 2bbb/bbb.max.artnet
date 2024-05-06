@@ -17,7 +17,7 @@ git clone
 
 after cloned, 
 
-use `install` command of `bbb.artnet.controller`
+use `install` command of `bbb.artnet.controller` / `bbb.artnet.node`
 
 ## dependencies
 
@@ -98,4 +98,51 @@ prepend `/` to above commands
 
 artnet node
 
-**NOT IMPLEMENTED**
+### messages
+
+* get_value NET SUBNET UNIVERSE CHANNEL
+    * get value of specified CHANNEL as `value NET SUBNET UNIVERSE CHANNEL 0`
+* get_values NET SUBNET UNIVERSE [LENGTH]
+    * LENGTH: length of values want to get, if not given then all values will be output
+    * get current values from 1st outlet as `values NET SUBNET UNIVERSE 0 ... 0`
+* install
+    * need network access to WAN
+    * install node_modules
+
+### osc command interface
+
+prepend `/` to above commands
+
+### attributes
+
+* `@ip`
+    * IP of destination of artnet node 
+    * string
+    * default: '127.0.0.1'
+* `@universe`
+    * integer
+    * default: 0
+* `@subnet`
+    * integer
+    * default: 0
+* `@net`
+    * integer
+    * default: 0
+* `@notify`
+    * enable/disable auto output `values` when receive packet
+    * boolean or integer[0/1]
+    * default : false
+* `@osc_in`
+    * enable osc command interface with given port. if not given then osc command interface will be disabled
+    * integer
+    * default: undefined
+* `@osc_out`
+    * enable osc feedback interface with given port. if not given then osc feedback interface will be disabled
+    * integer
+    * default: undefined
+* `@address_origin`
+    * integer
+    * default: 0
+* `@dict`
+    * name for dict object describe parameters with attribute keys above without `@`
+    * if this attribute is given then, other attributes above will be ignored
