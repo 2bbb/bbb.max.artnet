@@ -3,6 +3,7 @@ const dmxlib = new dmxnet();
 import * as Max from 'max-api';
 import * as osc from '@2bit/osc';
 
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -12,7 +13,10 @@ const __dirname = path.dirname(__filename);
 // console.log(dmxlib);
 
 const argv = process.argv.slice(2);
-console.log(__dirname);
+// console.log(__dirname);
+
+const packageinfo = JSON.parse(fs.readFileSync(path.join(__dirname, './package.json'), 'utf8'));
+Max.post(`${packageinfo.name} v${packageinfo.version}`);
 
 let blackout_values = null;
 
