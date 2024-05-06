@@ -89,6 +89,9 @@ prepend `/` to above commands
     * enable osc feedback interface with given port. if not given then osc feedback interface will be disabled
     * integer
     * default: undefined
+* `@disable_maxoutlet`
+    * boolean or integer
+    * default: false
 * `@address_origin`
     * integer
     * default: 0
@@ -146,6 +149,9 @@ prepend `/` to above commands
     * enable osc feedback interface with given port. if not given then osc feedback interface will be disabled
     * integer
     * default: undefined
+* `@disable_maxoutlet`
+    * boolean or integer
+    * default: false
 * `@address_origin`
     * integer
     * default: 0

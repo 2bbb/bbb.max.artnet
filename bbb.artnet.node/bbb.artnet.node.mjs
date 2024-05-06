@@ -22,6 +22,7 @@ const default_settings = {
     subnet: 0,
     net: 0,
     notify: false,
+    disable_maxoutlet: false,
     address_origin: 0,
     oem: 0x2908,
     esta: 0x0000,
@@ -71,9 +72,15 @@ const osc_client = (() => {
 
 const outlet = (() => {
     if(osc_client) {
-        return (key, ... args) => {
-            Max.outlet(key, ... args);
-            osc_client.send(`/${key}`, ... args);
+        if(settings.disable_maxoutlet) {
+            return (key, ... args) => {
+                osc_client.send(`/${key}`, ... args);
+            }
+        } else {
+            return (key, ... args) => {
+                Max.outlet(key, ... args);
+                osc_client.send(`/${key}`, ... args);
+            }
         }
     } else {
         return (key, ... args) => {

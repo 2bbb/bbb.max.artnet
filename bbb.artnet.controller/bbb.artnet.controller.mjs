@@ -27,6 +27,7 @@ const default_settings = {
     subnet: 0,
     net: 0,
     fps: 44,
+    disable_maxoutlet: false,
     address_origin: 0,
 };
 
@@ -68,9 +69,13 @@ const osc_client = (() => {
 
 const outlet = (() => {
     if(osc_client) {
-        return (key, ... args) => {
-            Max.outlet(key, ... args);
-            osc_client.send(`/${key}`, ... args);
+        if(settings.disable_maxoutlet) {
+
+        } else {
+            return (key, ... args) => {
+                Max.outlet(key, ... args);
+                osc_client.send(`/${key}`, ... args);
+            }
         }
     } else {
         return (key, ... args) => {
