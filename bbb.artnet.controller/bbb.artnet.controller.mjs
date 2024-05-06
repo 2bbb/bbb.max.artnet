@@ -70,11 +70,13 @@ const osc_client = (() => {
 const outlet = (() => {
     if(osc_client) {
         if(settings.disable_maxoutlet) {
-
+            return (key, ... args) => {
+                osc_client.send(`/${key}`, [ ... args ]);
+            }
         } else {
             return (key, ... args) => {
                 Max.outlet(key, ... args);
-                osc_client.send(`/${key}`, ... args);
+                osc_client.send(`/${key}`, [ ... args ]);
             }
         }
     } else {
