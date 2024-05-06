@@ -158,3 +158,12 @@ prepend `/` to above commands
 * `@dict`
     * name for dict object describe parameters with attribute keys above without `@`
     * if this attribute is given then, other attributes above will be ignored
+* `ip` (array)
+    * [on custom dict only] list of interface ip
+    * string[]
+* `universes` (array)
+    * [on custom dict only] list of universe setting
+    * if `notify` is not given, use `notify` on settings on global
+    * if `net` is not given, use 0
+    * if `subnet` is not given, use 0
+    * { "net"?: integer, "subnet"?: integer, "universe": integer, "notify"?: boolean }[]
