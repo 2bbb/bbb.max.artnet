@@ -2,14 +2,13 @@
   "name": "bbb.artnet.controller",
   "version": "0.0.1",
   "description": "",
-  "main": "index.mjs",
-  "module": "commonjs",
+  "main": "bbb.artnet.controller.mjs",
   "scripts": {
     "start": "node bbb.artnet.controller.mjs"
   },
   "keywords": [],
   "author": "2bit",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@2bit/osc": "^0.0.7",
     "@types/node": "^20.12.8",
