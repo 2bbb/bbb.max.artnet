@@ -2,30 +2,27 @@
 
 bbb.max.artnet is a library to use artnet based on node.script
 
-inspired by imp.dmx and pixsper/lxmax
+inspired by [imp.dmx](https://www.theimpersonalstereo.com/impdmx) and [pixsper/lxmax](https://github.com/pixsper/lxmax)
 
 this release is alpha version not stable.
 
 ## setup
+
+at first, clone repo to `Max N/Library`
 
 ```bash
 cd /path/to/USER/Max/Library
 git clone 
 ```
 
-after cloned
+after cloned, 
 
-```bash
-cd bbb.artnet.controller
-npm i
-```
-
-or use install command of `bbb.artnet.controller`
+use `install` command of `bbb.artnet.controller`
 
 ## dependencies
 
-* dmxnet
-* @2bit/osc
+* [dmxnet](https://github.com/margau/dmxnet)
+* [@2bit/osc](https://github.com/2bbb/node-2bit-osc)
 
 ## bbb.artnet.controller
 
@@ -92,3 +89,5 @@ prepend `/` to above commands
 ## bbb.artnet.node
 
 artnet node
+
+**NOT IMPLEMENTED**
