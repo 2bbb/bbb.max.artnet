@@ -120,7 +120,7 @@ function fill(min, max, value) {
 function blackout(enable) {
     if(enable === undefined || enable) {
         blackout_values = [ ... sender.values ];
-        sender.reset();
+        sender.values = [ ... Array(512).fill(0) ];
     } else {
         sender.values = [ ... blackout_values ];
         blackout_values = null;
